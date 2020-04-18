@@ -1,0 +1,6 @@
+name: ImprovedVillagers
+version: 1.0.0
+api-version: 1.15
+author: lukeeff
+description: A plugin for balancing villager trading mechanics.
+main: io.github.lukeeff.ImprovedVillagers

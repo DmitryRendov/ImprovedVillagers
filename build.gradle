@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+version = '1.0'
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+    }
+    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
+    maven {
+        name 'BungeeCord'
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
+
+    mavenLocal()
+
+}
+
+dependencies {
+    compileOnly "org.spigotmc:spigot:1.15.1-R0.1-SNAPSHOT"
+}
