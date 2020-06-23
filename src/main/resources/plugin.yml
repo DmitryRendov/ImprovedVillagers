@@ -1,0 +1,6 @@
+name: ${pluginName}
+version: ${pluginVersion}
+api-version: "1.15"
+author: ${pluginAuthor}
+description: ${pluginDescription}
+main: io.github.lukeeff.ImprovedVillagers

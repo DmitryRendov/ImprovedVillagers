@@ -1,24 +1,47 @@
-apply plugin: 'java'
+defaultTasks 'clean', 'build'
 
-version = '1.0'
+allprojects {
+    apply plugin: 'java'
 
-repositories {
-    mavenCentral()
+    version '0.1.0'
 
-    maven {
-        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots"
+    // Info
+    ext.pluginVersion = project.version
+    ext.pluginName = "ImprovedVillagers"
+    ext.pluginDescription = "A plugin for balancing villager trading mechanics."
+    ext.pluginAuthor = "lukeeff"
+
+    repositories {
+        mavenLocal()
+
+        // Maven central
+        mavenCentral()
+        // CodeMC repository
+        maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+        // CodeMC repository - NMS repository
+        maven { url = 'https://repo.codemc.org/repository/nms/' }
+        // Spigot repository for Spigot & Bukkit
+        maven { url = 'https://hub.spigotmc.org/nexus/content/groups/public/' }
+        // OSS Sonatype repository for Bungeecord
+        maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+        // Dmulloy repo
+        maven { url = 'https://repo.dmulloy2.net/nexus/repository/public/' }
     }
-    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
-    maven {
-        name 'BungeeCord'
-        url 'https://oss.sonatype.org/content/repositories/snapshots'
-    }
-    maven { url "https://repo.dmulloy2.net/nexus/repository/public/" }
 
-    mavenLocal()
+    dependencies {
+        compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.15.2-R0.1-SNAPSHOT'
+    }
 
 }
 
-dependencies {
-    compileOnly "org.spigotmc:spigot:1.15.1-R0.1-SNAPSHOT"
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        include 'plugin.yml'
+        expand([
+                'pluginVersion': project.ext.pluginVersion,
+                'pluginName': project.ext.pluginName,
+                'pluginDescription': project.ext.pluginDescription,
+                'pluginAuthor': project.ext.pluginAuthor
+        ])
+    }
 }
