@@ -1,11 +1,12 @@
 package io.github.lukeeff.version.v1_15;
 
 import io.github.lukeeff.version.VersionHandler;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.server.v1_15_R1.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
 import org.bukkit.entity.Villager;
+
 
 public class Handler_1_15_R1 implements VersionHandler {
 
@@ -20,10 +21,12 @@ public class Handler_1_15_R1 implements VersionHandler {
     @Override
     public void setMaxDiscount(int maxDiscount, Villager villager) {
         this.maxDiscount = maxDiscount;
-        Entity targetVillager = ((CraftEntity) villager).getHandle(); //Handle of villager object
-        NBTTagCompound tag = targetVillager.save(new NBTTagCompound()); //NBT tag of target entity
-        NBTTagList recipeData = (NBTTagList) tag.getCompound("Offers").get("Recipes");
-        modifyNBT(recipeData);
+        Entity targetVillager = ((CraftEntity) villager).getHandle();
+        NBTTagCompound tag = targetVillager.save(new NBTTagCompound());
+        if (tag.hasKeyOfType("Offers", 10)) {
+            NBTTagList recipeData = (NBTTagList) tag.getCompound("Offers").get("Recipes");
+            modifyNBT(recipeData);
+        }
         targetVillager.f(tag);
     }
 
@@ -34,9 +37,29 @@ public class Handler_1_15_R1 implements VersionHandler {
      */
     private void modifyNBT(NBTTagList tagList) {
         final String SPECIALPRICE = "specialPrice";
+
+        if (tagList == null || tagList.size() == 0) return;
         for (int i = 0; i < tagList.size(); i++) {
             int currentDiscount = tagList.getCompound(i).getInt(SPECIALPRICE);
+
+            if (currentDiscount < 0) {
+                NBTBase buy = tagList.getCompound(i).get("buy");
+                if (buy != null && buy.getTypeId() == 10) {
+                    NBTTagCompound nbtBuy = (NBTTagCompound) buy;
+                    if (nbtBuy.hasKey("Count")) {
+                        int buyCount = nbtBuy.getInt("Count");
+                        // Holy shit, Mojang! a discount might be two or even three times bigger than the original price
+                        if (Math.abs(currentDiscount) < buyCount) {
+                            maxDiscount = -1 * (int) Math.floor(buyCount * 0.15 + Math.abs(currentDiscount) * 0.1);
+                        } else {
+                            maxDiscount = -1 * (int) Math.floor(buyCount * 0.15 + Math.abs(currentDiscount % buyCount) * 0.2);
+                        }
+                    }
+                }
+            }
+
             if (currentDiscount < maxDiscount) {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[ImprovedVillagers] " + ChatColor.AQUA + "Adjusting discount from " + currentDiscount + " to " + maxDiscount);
                 tagList.getCompound(i).setInt(SPECIALPRICE, maxDiscount);
             }
         }

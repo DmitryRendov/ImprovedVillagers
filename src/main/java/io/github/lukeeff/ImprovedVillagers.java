@@ -18,7 +18,7 @@ public class ImprovedVillagers extends JavaPlugin {
         config = new DefaultConfig(this);
         config.loadConfig();
         versionPointer = new VersionPointer(this);
-        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Enabled IVillagers 1.0.0");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Enabled IVillagers v0.1.0");
         Bukkit.getPluginManager().registerEvents(new InventoryListener(config.getMaxDiscount()), this);
     }
 

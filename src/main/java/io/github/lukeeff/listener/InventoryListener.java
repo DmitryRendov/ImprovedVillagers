@@ -25,7 +25,6 @@ public class InventoryListener implements Listener {
         if (event.getInventory().getType().equals(InventoryType.MERCHANT) && event.getInventory().getHolder() instanceof Merchant) {
             Villager villager = (Villager) event.getInventory().getHolder();
             versionHandler.setMaxDiscount(maxDiscount, villager);
-
         }
     }
 }
