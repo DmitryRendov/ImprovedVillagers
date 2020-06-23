@@ -44,7 +44,8 @@ public class Handler_1_15_R1 implements VersionHandler {
 
             if (currentDiscount < 0) {
                 NBTBase buy = tagList.getCompound(i).get("buy");
-                if (buy != null && buy.getTypeId() == 10) {
+                NBTBase sell = tagList.getCompound(i).get("sell");
+                if (buy != null && sell != null && buy.getTypeId() == 10) {
                     NBTTagCompound nbtBuy = (NBTTagCompound) buy;
                     if (nbtBuy.hasKey("Count")) {
                         int buyCount = nbtBuy.getInt("Count");
@@ -54,6 +55,7 @@ public class Handler_1_15_R1 implements VersionHandler {
                         } else {
                             maxDiscount = -1 * (int) Math.floor(buyCount * 0.15 + Math.abs(currentDiscount % buyCount) * 0.2);
                         }
+                        Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[ImprovedVillagers] " + ChatColor.AQUA + "Orig=" + buyCount + " Cur=" + currentDiscount + " Calc=" + maxDiscount + "       Trades: " + buy.asString() + " " + sell.asString());
                     }
                 }
             }
