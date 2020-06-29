@@ -3,6 +3,7 @@ package io.github.lukeeff.version;
 import io.github.lukeeff.ImprovedVillagers;
 import io.github.lukeeff.version.v1_15.Handler_1_15_R1;
 import io.github.lukeeff.version.v1_15.Handler_1_15_R2;
+import io.github.lukeeff.version.v1_16.Handler_1_16_R1;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -29,6 +30,9 @@ public class VersionPointer {
                 break;
             case "v1_15_R2":
                 versionHandler = new Handler_1_15_R2();
+                break;
+            case "v1_16_R1":
+                versionHandler = new Handler_1_16_R1();
                 break;
             default:
                 disablePlugin();
