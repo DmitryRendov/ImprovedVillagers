@@ -29,7 +29,7 @@ public class Handler_1_16_R1 implements VersionHandler {
             NBTTagList recipeData = (NBTTagList) tag.getCompound("Offers").get("Recipes");
             modifyNBT(recipeData);
         }
-        targetVillager.a_(tag);
+        targetVillager.load(tag);
     }
 
     /**
