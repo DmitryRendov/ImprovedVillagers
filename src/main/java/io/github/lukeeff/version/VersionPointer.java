@@ -1,7 +1,7 @@
 package io.github.lukeeff.version;
 
 import io.github.lukeeff.ImprovedVillagers;
-import io.github.lukeeff.version.v1_16.Handler_1_16_R1;
+import io.github.lukeeff.version.v1_16.Handler_1_16_R2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -23,8 +23,8 @@ public class VersionPointer {
     public void handleVersion() {
         final String version = getServerVersion();
         switch (version) {
-            case "v1_16_R1":
-                versionHandler = new Handler_1_16_R1();
+            case "v1_16_R2":
+                versionHandler = new Handler_1_16_R2();
                 break;
             default:
                 disablePlugin();
@@ -43,7 +43,7 @@ public class VersionPointer {
 
     /**
      * Gets the version of the server as the following "vX_Y_RZ" with x y z being version numbers. For example,
-     * version 1.16.1 would return "v1_16_R1"
+     * version 1.16.3 would return "v1_16_R3"
      *
      * @return the version of the server.
      */

@@ -3,7 +3,7 @@ defaultTasks 'clean', 'build'
 allprojects {
     apply plugin: 'java'
 
-    version '0.2.0'
+    version '0.3.0'
 
     // Info
     ext.pluginVersion = project.version
@@ -29,7 +29,7 @@ allprojects {
     }
 
     dependencies {
-        compile group: 'org.spigotmc', name: 'spigot', version: '1.16.1-R0.1-SNAPSHOT'
+        compile group: 'org.spigotmc', name: 'spigot', version: '1.16.3-R0.1-SNAPSHOT'
     }
 
 }
